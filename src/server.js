@@ -18,10 +18,10 @@ const settings = merge(generalSettings, envSettings);
 
 let httpServer;
 let httpsServer;
-if (settings.server.http.enabled) {
+if ((settings.server.http || {}).enabled) {
     httpServer = http.createServer(app);
 }
-if (settings.server.https.enabled) {
+if ((settings.server.https || {}).enabled) {
     httpsServer = https.createServer(
         {
             key: fs.readFileSync(settings.server.https.key),
