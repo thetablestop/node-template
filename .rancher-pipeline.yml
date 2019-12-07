@@ -1,5 +1,5 @@
 stages:
-    - name: Deploy
-      steps:
-          - applyYamlConfig:
-                path: ./deployment.yaml
+- name: Deploy
+  steps:
+  - applyYamlConfig:
+      path: ./deployment.yaml
