@@ -55,8 +55,7 @@ if (httpsServer) {
 }
 
 // Setup routes
-router
-    .get('/test', async (req, res) => {
-        const svc = new HelloService();
-        res.send(svc.sayHi('/api/test'));
-    });
+router.get('/test', async (req, res) => {
+    const svc = new HelloService();
+    res.send(svc.sayHi(`${req.protocol}://${req.hostname}:${req.socket.localPort}/api/test`));
+});
