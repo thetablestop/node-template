@@ -56,6 +56,11 @@ if (httpsServer) {
 
 // Setup routes
 router.get('/test', async (req, res) => {
-    const svc = new HelloService();
-    res.send(svc.sayHi(`${req.protocol}://${req.hostname}:${req.socket.localPort}/api/test`));
+    try {
+        const svc = new HelloService();
+        res.send(svc.sayHi(`${req.protocol}://${req.hostname}:${req.socket.localPort}/api/test`));
+    } catch (err) {
+        console.err(err);
+        res.sendStatus(500);
+    }
 });
