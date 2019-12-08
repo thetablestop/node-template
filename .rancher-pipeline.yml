@@ -8,7 +8,7 @@ stages:
 notification:
   recipients:
   - recipient: builds
-    notifier: c-mrlxw:n-vqrmn
+    notifier: c-qgf2m:n-fldgj
   condition:
   - Success
   - Failed
