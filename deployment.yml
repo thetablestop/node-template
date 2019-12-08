@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: node-template
   labels:
-    cattle.io/creator: norman
     workload.user.cattle.io/workloadselector: deployment-apps-node-template
 spec:
   replicas: 3
