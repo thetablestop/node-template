@@ -3,3 +3,10 @@ stages:
   steps:
   - applyYamlConfig:
       path: ./deployment.yml
+notification:
+  recipients:
+  - recipient: builds
+    notifier: c-mrlxw:n-vqrmn
+  condition:
+  - Success
+  - Failed
