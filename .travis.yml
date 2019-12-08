@@ -8,7 +8,7 @@ env:
 services:
   - docker
 script:
-  - export FULL_VERSION=$VERSION.$TRAVIS_BUILD_NUMBER
+  - export FULL_VERSION=$VERSION_PREFIX.$TRAVIS_BUILD_NUMBER
   - export REPO_TAGGED=$TRAVIS_REPO_SLUG:$FULL_VERSION
   - export REPO_LATEST=$TRAVIS_REPO_SLUG:latest
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -21,4 +21,3 @@ after_success:
   - git config --global user.name "Travis CI"
   - git tag $FULL_VERSION -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
   - git push --tags
-  
