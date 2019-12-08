@@ -24,6 +24,6 @@ script:
 - docker push $REPO_LATEST
 - git config --global user.email "builds@travis-ci.com"
 - git config --global user.name "Travis CI"
-- git remote add origin https://$GH_USERNAME:$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git
+- git remote add tagorigin https://$GH_USERNAME:$GH_TOKEN@github.com/$TRAVIS_REPO_SLUG.git
 - git tag $FULL_VERSION -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
-- git push --tags
+- git push tagorigin --tags
