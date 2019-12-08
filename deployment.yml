@@ -1,254 +1,39 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  annotations:
-    cattle.io/timestamp: "2019-12-07T06:17:46Z"
-    cni.projectcalico.org/podIP: 10.42.1.10/32
-    field.cattle.io/ports: '[[{"containerPort":8080,"dnsName":"node-template-nodeport","kind":"NodePort","name":"http","protocol":"TCP","sourcePort":0},{"containerPort":4433,"dnsName":"node-template-nodeport","kind":"NodePort","name":"https","protocol":"TCP","sourcePort":0}]]'
-  creationTimestamp: "2019-12-07T06:18:00Z"
-  generateName: node-template-5cf98d4f5-
-  labels:
-    pod-template-hash: 5cf98d4f5
-    workload.user.cattle.io/workloadselector: deployment-apps-node-template
-  name: node-template-5cf98d4f5-5mm7g
-  namespace: apps
-  ownerReferences:
-  - apiVersion: apps/v1
-    blockOwnerDeletion: true
-    controller: true
-    kind: ReplicaSet
-    name: node-template-5cf98d4f5
-    uid: 824675c2-1ad1-4504-9b91-77a97fa1c941
-  resourceVersion: "5755"
-  selfLink: /api/v1/namespaces/apps/pods/node-template-5cf98d4f5-5mm7g
-  uid: a79cf56e-42dc-4ddc-9113-8fba386b6f8b
-spec:
-  containers:
-  - env:
-    - name: NODE_ENV
-      value: Production
-    image: thetablestop/node-template
-    imagePullPolicy: Always
-    livenessProbe:
-      failureThreshold: 3
-      httpGet:
-        path: /
-        port: 8080
-        scheme: HTTP
-      initialDelaySeconds: 10
-      periodSeconds: 2
-      successThreshold: 1
-      timeoutSeconds: 2
-    name: node-template
-    ports:
-    - containerPort: 8080
-      name: http
-      protocol: TCP
-    - containerPort: 4433
-      name: https
-      protocol: TCP
-    readinessProbe:
-      failureThreshold: 3
-      httpGet:
-        path: /
-        port: 8080
-        scheme: HTTP
-      initialDelaySeconds: 10
-      periodSeconds: 2
-      successThreshold: 2
-      timeoutSeconds: 2
-    resources: {}
-    securityContext:
-      allowPrivilegeEscalation: false
-      capabilities: {}
-      privileged: false
-      readOnlyRootFilesystem: false
-      runAsNonRoot: false
-    stdin: true
-    terminationMessagePath: /dev/termination-log
-    terminationMessagePolicy: File
-    tty: true
-    volumeMounts:
-    - mountPath: /mnt/nodeshared
-      name: nodeshared
-    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
-      name: default-token-8f6pq
-      readOnly: true
-  dnsPolicy: ClusterFirst
-  enableServiceLinks: true
-  nodeName: dev-cluster1
-  priority: 0
-  restartPolicy: Always
-  schedulerName: default-scheduler
-  securityContext: {}
-  serviceAccount: default
-  serviceAccountName: default
-  terminationGracePeriodSeconds: 30
-  tolerations:
-  - effect: NoExecute
-    key: node.kubernetes.io/not-ready
-    operator: Exists
-    tolerationSeconds: 300
-  - effect: NoExecute
-    key: node.kubernetes.io/unreachable
-    operator: Exists
-    tolerationSeconds: 300
-  volumes:
-  - hostPath:
-      path: /mnt/host
-      type: DirectoryOrCreate
-    name: nodeshared
-  - name: default-token-8f6pq
-    secret:
-      defaultMode: 420
-      secretName: default-token-8f6pq
-status:
-  conditions:
-  - lastProbeTime: null
-    lastTransitionTime: "2019-12-07T06:18:01Z"
-    status: "True"
-    type: Initialized
-  - lastProbeTime: null
-    lastTransitionTime: "2019-12-07T06:18:14Z"
-    status: "True"
-    type: Ready
-  - lastProbeTime: null
-    lastTransitionTime: "2019-12-07T06:18:14Z"
-    status: "True"
-    type: ContainersReady
-  - lastProbeTime: null
-    lastTransitionTime: "2019-12-07T06:18:01Z"
-    status: "True"
-    type: PodScheduled
-  containerStatuses:
-  - containerID: docker://3976bc25ecc44e6fef0916030337c5103e2a7053b764cbe7788ae855806dfefb
-    image: thetablestop/node-template:latest
-    imageID: docker-pullable://thetablestop/node-template@sha256:c24137f755cbaf5a64b8d1ce7beea528c6f46b168d0b3eed4ecab45795d10e23
-    lastState: {}
-    name: node-template
-    ready: true
-    restartCount: 0
-    state:
-      running:
-        startedAt: "2019-12-07T06:18:02Z"
-  hostIP: 192.168.147.85
-  phase: Running
-  podIP: 10.42.1.10
-  qosClass: BestEffort
-  startTime: "2019-12-07T06:18:01Z"
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "3"
-    field.cattle.io/creatorId: user-b2vbf
-    field.cattle.io/publicEndpoints: '[{"addresses":["104.237.149.74"],"port":32204,"protocol":"TCP","serviceName":"apps:node-template-nodeport","allNodes":true},{"addresses":["104.237.149.74"],"port":30914,"protocol":"TCP","serviceName":"apps:node-template-nodeport","allNodes":true}]'
-  creationTimestamp: "2019-12-07T06:11:05Z"
-  generation: 4
-  labels:
-    cattle.io/creator: norman
-    workload.user.cattle.io/workloadselector: deployment-apps-node-template
   name: node-template
-  namespace: apps
-  resourceVersion: "5840"
-  selfLink: /apis/apps/v1/namespaces/apps/deployments/node-template
-  uid: 1ed5ff75-d763-4046-84c9-51460746b518
 spec:
-  progressDeadlineSeconds: 600
   replicas: 3
-  revisionHistoryLimit: 10
-  selector:
-    matchLabels:
-      workload.user.cattle.io/workloadselector: deployment-apps-node-template
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 0
-    type: RollingUpdate
   template:
-    metadata:
-      annotations:
-        cattle.io/timestamp: "2019-12-07T06:17:46Z"
-        field.cattle.io/ports: '[[{"containerPort":8080,"dnsName":"node-template-nodeport","kind":"NodePort","name":"http","protocol":"TCP","sourcePort":0},{"containerPort":4433,"dnsName":"node-template-nodeport","kind":"NodePort","name":"https","protocol":"TCP","sourcePort":0}]]'
-      creationTimestamp: null
-      labels:
-        workload.user.cattle.io/workloadselector: deployment-apps-node-template
     spec:
       containers:
-      - env:
-        - name: NODE_ENV
-          value: Production
+      - name: node-template
         image: thetablestop/node-template
         imagePullPolicy: Always
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /
-            port: 8080
-            scheme: HTTP
-          initialDelaySeconds: 10
-          periodSeconds: 2
-          successThreshold: 1
-          timeoutSeconds: 2
-        name: node-template
+        env:
+        - name: NODE_ENV
+          value: Production
+        - name: NODE_PORT
+          value: "8080"
         ports:
         - containerPort: 8080
           name: http
           protocol: TCP
-        - containerPort: 4433
-          name: https
-          protocol: TCP
-        readinessProbe:
-          failureThreshold: 3
+        livenessProbe:
           httpGet:
             path: /
             port: 8080
             scheme: HTTP
-          initialDelaySeconds: 10
-          periodSeconds: 2
-          successThreshold: 2
-          timeoutSeconds: 2
-        resources: {}
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities: {}
-          privileged: false
-          readOnlyRootFilesystem: false
-          runAsNonRoot: false
-        stdin: true
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-        tty: true
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
         volumeMounts:
         - mountPath: /mnt/nodeshared
           name: nodeshared
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
       volumes:
       - hostPath:
           path: /mnt/host
           type: DirectoryOrCreate
         name: nodeshared
-status:
-  availableReplicas: 3
-  conditions:
-  - lastTransitionTime: "2019-12-07T06:15:35Z"
-    lastUpdateTime: "2019-12-07T06:15:35Z"
-    message: Deployment has minimum availability.
-    reason: MinimumReplicasAvailable
-    status: "True"
-    type: Available
-  - lastTransitionTime: "2019-12-07T06:11:05Z"
-    lastUpdateTime: "2019-12-07T06:18:28Z"
-    message: ReplicaSet "node-template-5cf98d4f5" has successfully progressed.
-    reason: NewReplicaSetAvailable
-    status: "True"
-    type: Progressing
-  observedGeneration: 4
-  readyReplicas: 3
-  replicas: 3
-  updatedReplicas: 3
