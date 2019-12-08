@@ -1,11 +1,13 @@
 # Node Template
 
+[![Build Status](https://travis-ci.org/thetablestop/node-template.svg?branch=master)](https://travis-ci.org/thetablestop/node-template)
+
 Use this as a starting point for a node express app.
 
 ## Install
 
 ```
-gcloud source repos clone node-template --project=thetablestop
+git clone git@github.com:thetablestop/node-template.git
 cd node-template
 yarn
 ```
@@ -16,10 +18,29 @@ yarn
 yarn start
 ```
 
-## Publish
+## CI/CD
+
+### Build
+
+-   Update `.travis.yml` to configure build. Most things will be able to be left as is, but the secure values will have to be replaced with the following [Travis CLI](https://github.com/travis-ci/travis.rb) commands:
 
 ```
-gcloud config set project thetablestop
-gcloud builds submit --tag gcr.io/thetablestop/<APP_NAME>
-gcloud run deploy <APP_NAME> --image gcr.io/thetablestop/<APP_NAME>:latest --platform managed --region us-central1 --allow-unauthenticated
+travis encrypt GH_USERNAME={YOUR USERNAME} --add env.global
+travis encrypt GH_TOKEN={YOUR PASSWORD} --add env.global
+travis encrypt DOCKER_USERNAME={YOUR USERNAME} --add env.global
+travis encrypt DOCKER_TOKEN={YOUR PASSWORD} --add env.global
+travis encrypt "thetablestop:{SLACK WEBHOOK TOKEN}" --add notifications.slack
+```
+
+-   NOTE: It is recommended to generate an Personal Access Token in [DockerHub](https://hub.docker.com/settings/security) and [GitHub](https://github.com/settings/tokens) rather than entering the exact password.
+
+### Deploy
+
+-   In `deployment.yml` replace the application name "node-template" with the appropriate name. Mostly this will be the only thing you need to fix. You may also want to change the `Replicas` property to the count of nodes the application needs at start.
+
+-   If a public subdomain is required for this application, also replace the application name/subdomain in `deploy-ingress.yml`. If this is an internal only application, you can delete `deploy-ingress.yml` and remove this section from `.rancher-pipeline.yml`:
+
+```yml
+- applyYamlConfig:
+  path: ./deploy-ingress.yml
 ```

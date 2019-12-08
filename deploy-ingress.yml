@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: apps
+  name: node-template
+spec:
+  rules:
+  - host: node-template.thetablestop.com
+    http:
+      paths:
+      - backend:
+          serviceName: node-template
+          servicePort: 8080
+  tls:
+  - hosts:
+    - node-template.thetablestop.com
+    secretName: star-thetablestop-com
