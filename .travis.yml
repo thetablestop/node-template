@@ -16,8 +16,4 @@ notifications:
 services:
 - docker
 script:
-- set -e
-- ./scripts/build_image.sh
-- ./scripts/push_image.sh
-- ./scripts/tag_release.sh
-- set +e
+- set -e && ./scripts/build_image.sh && ./scripts/push_image.sh && ./scripts/tag_release.sh && set +e
