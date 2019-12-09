@@ -4,7 +4,7 @@
     "description": "Use this as a template to build a node application.",
     "main": "src/server.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "echo \"Warn: no test specified\" && exit 0",
         "start": "nodemon -r esm src/server.js",
         "serve": "node -r esm src/server.js"
     },
