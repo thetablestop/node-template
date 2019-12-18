@@ -11,7 +11,7 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    workloadID_node-template: "true"
+    workload.user.cattle.io/workloadselector: deployment-apps-node-template
   sessionAffinity: None
   type: ClusterIP
 ---
