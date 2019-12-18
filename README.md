@@ -44,11 +44,11 @@ travis encrypt "thetablestop:{SLACK WEBHOOK TOKEN}" --add notifications.slack
     -   Go back to pipelines after clicking Save/Done and then click the 3 dots to the right of the new repository, then click Setting.
     -   In the settings, change the trigger from "Push" to "Tag"
 
--   In `deployment.yml` replace the application name "node-template" with the appropriate name. Mostly this will be the only thing you need to fix. You may also want to change the `Replicas` property to the count of nodes the application needs at start.
+-   In `.deployment.yml` and `.service.yml` replace the application name "node-template" with the appropriate name. Mostly this will be the only thing you need to fix. You may also want to change the `Replicas` property to the count of nodes the application needs at start.
 
--   If a public subdomain is required for this application, also replace the application name/subdomain in `deploy-ingress.yml`. If this is an internal only application, you can delete `deploy-ingress.yml` and remove this section from `.rancher-pipeline.yml`:
+-   If a public subdomain is required for this application, also replace the application name/subdomain in `.ingress.yml`. If this is an internal only application, you can delete `.ingress.yml` and remove this section from `.rancher-pipeline.yml`:
 
 ```yml
 - applyYamlConfig:
-  path: ./deploy-ingress.yml
+  path: ./.ingress.yml
 ```
