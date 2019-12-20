@@ -2,7 +2,18 @@ import express from 'express';
 import cors from 'cors';
 import http from 'http';
 import bodyParser from 'body-parser';
-import { HelloService } from './hello-service.js';
+import * as awilix from 'awilix';
+import { HelloService } from './services/hello-service.js';
+import { HelloController } from './controllers/hello-controller.js';
+
+const container = awilix.createContainer({
+    injectionMode: awilix.InjectionMode.PROXY
+});
+
+container.register({
+    helloController: awilix.asClass(HelloController),
+    helloService: awilix.asClass(HelloService)
+});
 
 const app = express();
 const router = express.Router();
@@ -26,12 +37,4 @@ httpServer.listen(port);
 console.log(`Listening on http://localhost:${port}`);
 
 // Setup routes
-router.get('/test', async (req, res) => {
-    try {
-        const svc = new HelloService();
-        res.send(svc.sayHi(`${req.protocol}://${req.hostname}:${req.socket.localPort}/api/test`));
-    } catch (err) {
-        console.err(err);
-        res.sendStatus(500);
-    }
-});
+router.get('/test', async (req, res) => await container.cradle.helloController.sayHi(req, res));
