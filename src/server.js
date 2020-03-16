@@ -80,6 +80,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
             result += 'DB connection: Successful<br />';
         } catch (err) {
             result += `DB connection: Error: ${err}<br />`;
+            console.error('DB connection failed', err);
         }
 
         try {
@@ -92,6 +93,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
             channel.close();
         } catch (err) {
             result += `Queue channel connection: ${err}<br />`;
+            console.error('Queue connection failed', err);
         }
         res.send(result);
     });
