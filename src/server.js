@@ -49,6 +49,7 @@ container.register({
         return {
             connect: async () => {
                 const conn = await amqp.connect(process.env.RABBITMQ_PUBSUB_CONNECTION);
+                console.log(`Connected to: ${process.env.RABBITMQ_PUBSUB_CONNECTION}`);
                 return await conn.createChannel();
             }
         };
