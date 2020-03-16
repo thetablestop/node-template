@@ -52,6 +52,24 @@ spec:
   selector:
     app: node-template
 ---
+apiVersion: v1
+kind: Service
+apiVersion: v1
+metadata:
+  name: mongo
+spec:
+  type: ExternalName
+  externalName: cluster0-bsyck.gcp.mongodb.net
+---
+apiVersion: v1
+kind: Service
+apiVersion: v1
+metadata:
+  name: rabbitmq
+spec:
+  type: ExternalName
+  externalName: albatross.rmq.cloudamqp.com
+---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:

@@ -41,3 +41,4 @@ jobs:
     - git tag $FULL_VERSION -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
     - git push tagorigin --tags
     - kubectl apply -f manifest.yml
+    - kubectl set image deployment/$TRAVIS_REPO_SLUG $TRAVIS_REPO_SLUG=$REPO_TAGGED
