@@ -3,7 +3,7 @@
 FROM node:12-slim
 
 # Add diagnostic tools
-RUN apt-get -yq update && apt-get install -y iputils-ping
+RUN apt-get -yq update && apt-get install -y iputils-ping dnsutils
 
 # Create and change to the app directory.
 WORKDIR /home/appusr/app
