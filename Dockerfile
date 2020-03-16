@@ -2,8 +2,8 @@
 # https://hub.docker.com/_/node
 FROM node:12-slim
 
-# Setup mount directory
-RUN mkdir -p /mnt/nodeshared
+# Add diagnostic tools
+RUN apt-get -yq update && apt-get install -y iputils-ping
 
 # Create and change to the app directory.
 WORKDIR /home/appusr/app
