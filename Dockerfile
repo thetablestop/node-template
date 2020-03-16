@@ -15,8 +15,7 @@ COPY src/. src/
 
 # Add app user
 RUN useradd -r appusr \
-  && chown -R appusr:appusr /home/appusr \
-  && chown -R appusr:appusr /mnt/nodeshared
+  && chown -R appusr:appusr /home/appusr
 
 # Run app as non privileged.
 USER appusr
