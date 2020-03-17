@@ -22,6 +22,7 @@ container.register({
                 return new Promise((res, rej) => {
                     try {
                         const connstr = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_HOST}/${process.env.MONGODB_LOGINDB}?retryWrites=true&=majority`;
+                        console.log(`Connecting to DB with connstr: ${connstr}`);
                         MongoClient.connect(
                             connstr,
                             {
@@ -51,6 +52,7 @@ container.register({
             connect: async () => {
                 const connstr = `amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}/${process.env
                     .RABBITMQ_VHOST || ''}`;
+                console.log(`Connecting to Queue with connstr: ${connstr}`);
                 const conn = await amqp.connect(connstr);
                 return await conn.createChannel();
             }
