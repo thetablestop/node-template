@@ -1,7 +1,7 @@
 const amqp = require('amqplib');
+console.log(process.argv);
 
-const connstr = `amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}/${process.env
-    .RABBITMQ_VHOST || ''}`;
+const connstr = `amqp://${process.argv[4]}:${process.argv[5]}@${process.argv[2]}/${process.argv[3]}`;
 amqp.connect(connstr).then(conn => {
     conn.createChannel().then(ch => {
         console.log(ch);

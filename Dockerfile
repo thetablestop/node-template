@@ -1,6 +1,6 @@
-# Use the official lightweight Node.js 12 image.
+# Use the official lightweight Node.js 10 image.
 # https://hub.docker.com/_/node
-FROM node:12-slim
+FROM node:10-slim
 
 # Add diagnostic tools
 RUN apt-get -yq update && apt-get install -y iputils-ping dnsutils python python-pip

@@ -1,6 +1,7 @@
 const MongoClient = require('mongodb');
+console.log(process.argv);
 
-const connstr = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_HOST}/${process.env.MONGODB_LOGINDB}?retryWrites=true&=majority`;
+const connstr = `mongodb+srv://${process.argv[4]}:${process.argv[5]}@${process.argv[2]}/${process.argv[3]}?retryWrites=true&=majority`;
 MongoClient.connect(
     connstr,
     {
