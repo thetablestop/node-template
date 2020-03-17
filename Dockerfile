@@ -17,6 +17,9 @@ COPY src/. src/
 COPY startup.sh .
 RUN chmod 700 ./startup.sh
 
+COPY check-queue.py .
+RUN chmod 700 ./check-queue.py
+
 # Add app user
 RUN useradd -r appusr \
   && chown -R appusr:appusr /home/appusr
