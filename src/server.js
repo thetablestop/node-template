@@ -14,15 +14,16 @@ const container = awilix.createContainer({
 
 container.register({
     mongodbProvider: awilix.asFunction(() => {
-        if (!process.env.MONGODB_CONNECTION) {
-            throw new Error('An environment variable MONGODB_CONNECTION is required with the value of the db connection string.');
+        if (!process.env.MONGODB_HOST || !process.env.MONGODB_LOGINDB || !process.env.MONGODB_USER || !process.env.MONGODB_PASS) {
+            throw new Error('MongoDB env vars are required: MONGODB_HOST & MONGODB_LOGINDB & MONGODB_USER & MONGODB_PASS');
         }
         return {
             connect: async () => {
                 return new Promise((res, rej) => {
                     try {
+                        const connstr = `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@${process.env.MONGODB_HOST}/${process.env.MONGODB_LOGINDB}?retryWrites=true&=majority`;
                         MongoClient.connect(
-                            process.env.MONGODB_CONNECTION,
+                            connstr,
                             {
                                 useUnifiedTopology: true
                             },
@@ -41,15 +42,16 @@ container.register({
         };
     }),
     pubSubQueueProvider: awilix.asFunction(() => {
-        if (!process.env.RABBITMQ_PUBSUB_CONNECTION) {
+        if (!process.env.RABBITMQ_HOST || !process.env.RABBITMQ_USER || !process.env.RABBITMQ_PASS) {
             throw new Error(
-                'An environment variable RABBITMQ_PUBSUB_CONNECTION is required with the value of the queue connection string.'
+                'RabbitMQ env vars are required: RABBITMQ_HOST & RABBITMQ_USER & RABBITMQ_PASS (RABBITMQ_VHOST is available, but optional)'
             );
         }
         return {
             connect: async () => {
-                const conn = await amqp.connect(process.env.RABBITMQ_PUBSUB_CONNECTION);
-                console.log(`Connected to: ${process.env.RABBITMQ_PUBSUB_CONNECTION}`);
+                const connstr = `amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_PASS}@${process.env.RABBITMQ_HOST}/${process.env
+                    .RABBITMQ_VHOST || ''}`;
+                const conn = await amqp.connect(connstr);
                 return await conn.createChannel();
             }
         };
