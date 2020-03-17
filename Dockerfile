@@ -31,7 +31,7 @@ RUN useradd -r appusr \
 USER appusr
 
 # Run startup
-ENTRYPOINT [ "./startup.sh" ]
+#ENTRYPOINT [ "./startup.sh" ]
 
 # Run the web service on container startup.
 CMD [ "yarn", "serve" ]
