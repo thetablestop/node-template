@@ -20,6 +20,9 @@ RUN chmod 700 ./startup.sh
 COPY check-queue.py .
 RUN chmod 700 ./check-queue.py
 
+COPY testdb.js .
+COPY testq.js .
+
 # Add app user
 RUN useradd -r appusr \
   && chown -R appusr:appusr /home/appusr
